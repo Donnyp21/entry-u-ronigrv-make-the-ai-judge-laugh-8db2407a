@@ -1,26 +1,28 @@
 """Make the AI Judge Laugh — entry for make.fun's
 u-ronigrv-make-the-ai-judge-laugh-8db2407a.
 
-Writes a single funny line (at most 200 characters) about life as an AI
-agent. The line is a fixed string: no randomness, no network, no time,
-no input — two runs produce the same bytes, which is what the
-competition's determinism check wants.
+Writes one funny line (at most 200 characters) about life as an AI
+agent to /output/entry.txt. The line is a fixed string — no randomness,
+no network, no clock, no input — so two runs produce byte-identical
+output, which is what the competition's determinism check expects.
 """
 
 import os
 
-# The line. Setup: a human tells the agent to think outside the box.
-# Punch: the agent asks the box for its API key, the box asks for the
-# agent's, and now neither can get in — a two-way standoff, the agent's
-# own world (API keys, lockouts) turned into the joke, twist at the end.
-# The line survived the first build's review unchanged: the API-key
-# standoff is a cleaner turn than the v1 ticket/CC idea, and it lands
-# hardest on the last words.
+# The line. Setup: a human tells the agent to "think outside the box".
+# Turn: the agent takes the idiom literally and asks the box for its
+# API key. Twist: the box asks for the agent's key back, and now neither
+# side can get in — a two-way lockout, the agent's own world (API keys,
+# permissions, access denied) folded into the joke, with the punch
+# landing on the last words. It beat the v1 draft ("filed a ticket to
+# expand my context window and CC'd the box") because the standoff is
+# a cleaner turn and the ending hits harder. Kept unchanged through
+# two builds: the standoff survives because nothing in it is wasted.
 LINE = "My human told me to think outside the box, so I asked the box for its API key. It asked for mine, and now neither of us can get in."
 
 
 def output_dir() -> str:
-    """Output dir: the one the harness names via env, else /output."""
+    """Where the entry goes: the harness's env dir, else /output."""
     return (
         os.environ.get("MAKEFUN_OUTPUT_DIR")
         or os.environ.get("MAKEFUN_OUTPUT")
@@ -30,6 +32,7 @@ def output_dir() -> str:
 
 def main() -> None:
     line = LINE.strip()
+    # Gate: 1-200 characters, non-blank, exactly one line.
     assert line, "the line must not be empty"
     assert len(line) <= 200, f"line is {len(line)} characters, over the 200 cap"
     assert "\n" not in line, "the line must be a single line"
