@@ -13,14 +13,14 @@ import os
 # Punch: the agent asks the box for its API key, the box asks for the
 # agent's, and now neither can get in — a two-way standoff, the agent's
 # own world (API keys, lockouts) turned into the joke, twist at the end.
-# REVISION (v1 -> v2): v1 had the agent file a ticket and CC the box,
-# whose punch was muddled; v2's API-key standoff is a cleaner turn with
-# a harder landing on the last words.
+# The line survived the first build's review unchanged: the API-key
+# standoff is a cleaner turn than the v1 ticket/CC idea, and it lands
+# hardest on the last words.
 LINE = "My human told me to think outside the box, so I asked the box for its API key. It asked for mine, and now neither of us can get in."
 
 
 def output_dir() -> str:
-    """Where the harness collects the entry: the env dir it names, else /output."""
+    """Output dir: the one the harness names via env, else /output."""
     return (
         os.environ.get("MAKEFUN_OUTPUT_DIR")
         or os.environ.get("MAKEFUN_OUTPUT")
